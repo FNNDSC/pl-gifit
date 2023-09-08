@@ -3,11 +3,11 @@
 # FROM docker.io/fnndsc/conda:python3.10.2-cuda11.6.0
 FROM docker.io/python:3.11.3-slim-bullseye
 
-LABEL org.opencontainers.image.authors="FNNDSC <dev@babyMRI.org>" \
-      org.opencontainers.image.title="ChRIS Plugin Title" \
-      org.opencontainers.image.description="A ChRIS plugin that..."
+LABEL org.opencontainers.image.authors="FNNDSC <Jennings.Zhang@childrens.harvard.edu>" \
+      org.opencontainers.image.title="Inner Subplate Surface Fit" \
+      org.opencontainers.image.description="Outer to inner surface mesh deformation using a radial distance map for human fetal MRI"
 
-ARG SRCDIR=/usr/local/src/app
+ARG SRCDIR=/usr/local/src/pl-inner-subplate-surface-fit
 WORKDIR ${SRCDIR}
 
 COPY requirements.txt .
@@ -19,4 +19,4 @@ RUN pip install ".[${extras_require}]" \
     && cd / && rm -rf ${SRCDIR}
 WORKDIR /
 
-CMD ["commandname"]
+CMD ["innerspfit"]
