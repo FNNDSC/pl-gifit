@@ -19,18 +19,18 @@ def get_version(rel_path: str) -> str:
 
 
 setup(
-    name='chris-plugin-template',
-    version=get_version('app.py'),
-    description='A ChRIS DS plugin template',
+    name='innerspfit',
+    version=get_version('innerspfit/__init__.py'),
+    description='Outer to inner surface mesh deformation using a radial distance map for human fetal MRI',
     author='FNNDSC',
-    author_email='dev@babyMRI.org',
-    url='https://github.com/FNNDSC/python-chrisapp-template',
-    py_modules=['app'],
-    install_requires=['chris_plugin'],
+    author_email='Jennings.Zhang@childrens.harvard.edu',
+    url='https://github.com/FNNDSC/pl-inner-subplate-surface-fit',
+    packages=['innerspfit'],
+    install_requires=['chris_plugin', 'pandas', 'loguru'],
     license='MIT',
     entry_points={
         'console_scripts': [
-            'commandname = app:main'
+            'innerspfit = innerspfit.__main__:main'
         ]
     },
     classifiers=[
@@ -44,5 +44,8 @@ setup(
         'dev': [
             'pytest~=7.1'
         ]
+    },
+    package_data={
+        'innerspfit': ['model.csv']
     }
 )
