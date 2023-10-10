@@ -33,7 +33,6 @@ setup(
             'innerspfit = innerspfit.__main__:main'
         ]
     },
-    scripts=['surface_fit_script.pl'],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Topic :: Scientific/Engineering',

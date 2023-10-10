@@ -160,7 +160,7 @@ for (my $i = 0; $i < $num_rows; $i++) {
 
 copy($white_surface, $surface);
 
-my $tmpdir = &tempdir( "ep-surface_fit_parametarized-XXXXXX", TMPDIR => 1, CLEANUP => 1 );
+my $tmpdir = &tempdir( "surface_fit_script-XXXXXX", TMPDIR => 1, CLEANUP => 1 );
 
 my $stretch_model = "$tmpdir/stretch_length_model.obj";
 my $ICBM_white_model = MNI::DataDir::dir("surface-extraction") . "/white_model_320.obj";
