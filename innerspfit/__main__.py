@@ -3,6 +3,7 @@ import itertools
 import os
 import subprocess as sp
 import sys
+import shlex
 from argparse import ArgumentParser, Namespace, ArgumentDefaultsHelpFormatter
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -60,8 +61,14 @@ def run_surface_fit(grid: Path, output_surf: Path, model: Model) -> bool:
         logger.error('No starting surface found for {}', grid)
         return False
 
-    # TODO measure GI here
-    gi = ...
+    gi_file = output_surf.with_suffix('.gi.txt')
+    gi_cmd = ['gyrification_index', starting_surface, gi_file]
+    gi_proc = sp.run(gi_cmd)
+    if gi_proc.returncode != 0:
+        logger.info('Failed: {}',  shlex.join(map(str, gi_cmd)))
+        return False
+    gi = parse_gi_from_file(gi_file)
+    logger.info('{} gyrification_index={}', starting_surface, gi)
 
     params = (p.to_cliargs() for p in model.get_params_for(gi))
     cli_args = [arg for row in params for arg in row]
@@ -73,18 +80,18 @@ def run_surface_fit(grid: Path, output_surf: Path, model: Model) -> bool:
 
     cmd = ['surface_fit_script.pl', *cli_args, *extra_args, grid, starting_surface, output_surf]
     log_file = output_surf.with_name(output_surf.name + '.log')
-    logger.info('Starting: {}', ' '.join(map(str, cmd)))
-    # with log_file.open('wb') as log_handle:
-    #     job = sp.run(cmd, stdout=log_handle, stderr=log_handle)
-    # rc_file = log_file.with_suffix('.rc')
-    # rc_file.write_text(str(job.returncode))
-    #
-    # if job.returncode == 0:
-    #     logger.info('Finished: {} -> {}', starting_surface, output_surf)
-    #     return True
-    #
-    # logger.error('FAILED -- check log file for details: {}', log_file)
-    # return False
+    logger.info('Starting: {}', shlex.join(map(str, cmd)))
+    with log_file.open('wb') as log_handle:
+        job = sp.run(cmd, stdout=log_handle, stderr=log_handle)
+    rc_file = log_file.with_suffix('.rc')
+    rc_file.write_text(str(job.returncode))
+
+    if job.returncode == 0:
+        logger.info('Finished: {} -> {}', starting_surface, output_surf)
+        return True
+
+    logger.error('FAILED -- check log file for details: {}', log_file)
+    return False
 
 
 def locate_surface_for(mask: Path) -> Optional[Path]:
@@ -94,6 +101,10 @@ def locate_surface_for(mask: Path) -> Optional[Path]:
     if second is not None:
         return None
     return first
+
+
+def parse_gi_from_file(f: Path) -> float:
+    return float(f.read_text().rsplit(':', maxsplit=1)[-1].strip())
 
 
 if __name__ == '__main__':

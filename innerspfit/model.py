@@ -88,7 +88,7 @@ class Model:
     def get_params_for(self, gi: float) -> Iterator[SurfaceFitParams]:
         matched_gi = self._match_gi(gi)
         sliced_df = self._select_schedule_for(matched_gi)
-        return map(SurfaceFitParams.from_namedtuple, sliced_df)
+        return map(SurfaceFitParams.from_namedtuple, sliced_df.itertuples())
 
     def _match_gi(self, gi: float) -> KnownGi:
         """
