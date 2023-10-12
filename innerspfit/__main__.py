@@ -13,6 +13,7 @@ from chris_plugin import chris_plugin, PathMapper
 from loguru import logger
 
 from innerspfit import __version__, DISPLAY_TITLE, helpers
+from innerspfit.gi import gyrification_index
 from innerspfit.model import Model
 
 parser = ArgumentParser(description='surface_fit wrapper',
@@ -61,12 +62,7 @@ def run_surface_fit(grid: Path, output_surf: Path, model: Model) -> bool:
         return False
 
     gi_file = output_surf.with_suffix('.gi.txt')
-    gi_cmd = ['gyrification_index', starting_surface, gi_file]
-    gi_proc = sp.run(gi_cmd)
-    if gi_proc.returncode != 0:
-        logger.info('Failed: {}',  shlex.join(map(str, gi_cmd)))
-        return False
-    gi = parse_gi_from_file(gi_file)
+    gi = gyrification_index(starting_surface, gi_file)
     logger.info('{} gyrification_index={}', starting_surface, gi)
 
     sched = model.get_schedule_for(gi)
@@ -100,10 +96,6 @@ def locate_surface_for(mask: Path) -> Optional[Path]:
     if second is not None:
         return None
     return first
-
-
-def parse_gi_from_file(f: Path) -> float:
-    return float(f.read_text().rsplit(':', maxsplit=1)[-1].strip())
 
 
 if __name__ == '__main__':
