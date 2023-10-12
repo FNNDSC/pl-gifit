@@ -1,4 +1,4 @@
-FROM docker.io/fnndsc/pl-inner-subplate-surface-fit:base-1
+FROM docker.io/fnndsc/pl-innerspfit:base-1
 
 LABEL org.opencontainers.image.authors="FNNDSC <Jennings.Zhang@childrens.harvard.edu>" \
       org.opencontainers.image.title="Inner Subplate Surface Fit" \
