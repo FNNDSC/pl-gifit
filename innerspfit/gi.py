@@ -65,12 +65,12 @@ def _last_line_of(f: str | os.PathLike) -> str:
         nonempty_lines = filter(_not_empty, o)
         for i, line in enumerate(nonempty_lines):
             last_line = line
-            count = i
+            count = i + 1
 
     if count > 1:
         logger.warning('{} contains multiples lines. Maybe it contains error messages?', f)
     if count == 0:
-        logger.warning('{} is empty')
+        logger.warning('{} is empty', f)
 
     return last_line
 
