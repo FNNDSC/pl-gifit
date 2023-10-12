@@ -94,7 +94,7 @@ def run_surface_fit(grid: Path, output_surf: Path, model: Model) -> bool:
 
 
 def locate_surface_for(mask: Path) -> Optional[Path]:
-    glob = mask.parent.glob('*.obj')
+    glob = mask.parent.glob(helpers.sided_glob(mask, '.obj'))
     first = next(glob, None)
     second = next(glob, None)
     if second is not None:
