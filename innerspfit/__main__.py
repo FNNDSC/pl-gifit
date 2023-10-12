@@ -12,9 +12,8 @@ from typing import Optional
 from chris_plugin import chris_plugin, PathMapper
 from loguru import logger
 
-from innerspfit import __version__, DISPLAY_TITLE
+from innerspfit import __version__, DISPLAY_TITLE, helpers
 from innerspfit.model import Model
-
 
 parser = ArgumentParser(description='surface_fit wrapper',
                         formatter_class=ArgumentDefaultsHelpFormatter)
@@ -70,8 +69,8 @@ def run_surface_fit(grid: Path, output_surf: Path, model: Model) -> bool:
     gi = parse_gi_from_file(gi_file)
     logger.info('{} gyrification_index={}', starting_surface, gi)
 
-    params = (p.to_cliargs() for p in model.get_params_for(gi))
-    cli_args = [arg for row in params for arg in row]
+    sched = model.get_schedule_for(gi)
+    cli_args = helpers.to_cliargs(sched)
 
     extra_args = [
         '-disterr', output_surf.with_suffix('.disterr.txt'),

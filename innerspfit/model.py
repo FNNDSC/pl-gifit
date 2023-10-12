@@ -77,6 +77,9 @@ class SurfaceFitParams:
             self.taubin
         ]
 
+    def astuple(self) -> tuple[str, ...]:
+        return dataclasses.astuple(self)
+
 
 class Model:
     def __init__(self, path: str | os.PathLike = _MODEL_PATH):
@@ -85,7 +88,7 @@ class Model:
         if missing_fields:
             raise ValueError(f'{path} is missing the following columns: {missing_fields}')
 
-    def get_params_for(self, gi: float) -> Iterator[SurfaceFitParams]:
+    def get_schedule_for(self, gi: float) -> Iterator[SurfaceFitParams]:
         matched_gi = self._match_gi(gi)
         sliced_df = self._select_schedule_for(matched_gi)
         return map(SurfaceFitParams.from_namedtuple, sliced_df.itertuples())
