@@ -28,7 +28,7 @@ def _run_adapt_object_mesh(surface: str | os.PathLike, output: str | os.PathLike
     surface = Path(surface)
     output = Path(output)
     cmd = ['adapt_object_mesh', surface, output, '9999999', '50', '0', '0']
-    proc = sp.run(cmd)
+    proc = sp.run(cmd, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
     if proc.returncode != 0:
         logger.warning('Failed: {}', shlex.join(map(str, cmd)))
         output.unlink(missing_ok=True)
@@ -37,9 +37,15 @@ def _run_adapt_object_mesh(surface: str | os.PathLike, output: str | os.PathLike
 
 def _run_gyrification_index(surface: str | os.PathLike, output_file: str | os.PathLike) -> float:
     cmd = ['gyrification_index', surface, output_file]
-    proc = sp.run(cmd)
+    str_cmd = shlex.join(map(str, cmd))
+    output_path = Path(output_file)
+    log_file = output_path.with_suffix(output_path.suffix + '.log')
+    with log_file.open('wb') as log_out:
+        proc = sp.run(cmd, stdout=log_out, stderr=log_out)
+    if _not_empty(log_file.read_text()):
+        logger.warning('The command {} produced error messages to {}', str_cmd, log_file)
     if proc.returncode != 0:
-        logger.warning('Failed: {}', shlex.join(map(str, cmd)))
+        logger.warning('Failed: {}', str_cmd)
         return 1.0
     if (gi := _parse_gi_from_file(output_file)) is not None:
         return gi
@@ -76,4 +82,4 @@ def _last_line_of(f: str | os.PathLike) -> str:
 
 
 def _not_empty(s: str) -> bool:
-    return not s.isspace()
+    return s != '' and not s.isspace()
