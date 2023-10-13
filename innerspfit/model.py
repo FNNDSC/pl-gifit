@@ -1,12 +1,9 @@
 import dataclasses
-import importlib.resources
 import pandas as pd
-from pathlib import Path
 import os
 from collections import defaultdict
 from typing import NewType, Self, Iterator
 
-_MODEL_PATH = Path(str(importlib.resources.files(__package__).joinpath('model.csv')))
 _MODEL_PARAM_TYPES: defaultdict[str, type] = defaultdict(lambda: str)
 _MODEL_PARAM_TYPES['approximate_age'] = int
 _MODEL_PARAM_TYPES['stage'] = int
@@ -82,7 +79,7 @@ class SurfaceFitParams:
 
 
 class Model:
-    def __init__(self, path: str | os.PathLike = _MODEL_PATH):
+    def __init__(self, path: str | os.PathLike):
         self._df = pd.read_csv(path, dtype=_MODEL_PARAM_TYPES)
         missing_fields = SurfaceFitParams.field_names() - set(self._df.columns)
         if missing_fields:

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import importlib.resources
 import itertools
 import os
 import subprocess as sp
@@ -20,6 +21,8 @@ parser = ArgumentParser(description='surface_fit wrapper',
                         formatter_class=ArgumentDefaultsHelpFormatter)
 parser.add_argument('--no-fail', dest='no_fail', action='store_true',
                     help='Produce exit code 0 even if any subprocesses do not.')
+parser.add_argument('-m', '--model', dest='model', type=str, default='a',
+                    help='Name of built-in model to use, or a path to a custom CSV model.')
 parser.add_argument('-V', '--version', action='version',
                     version=f'%(prog)s {__version__}')
 parser.add_argument('-t', '--threads', type=int, default=0,
@@ -43,7 +46,9 @@ def main(options: Namespace, inputdir: Path, outputdir: Path):
         nproc = len(os.sched_getaffinity(0))
     logger.info('Using {} threads.', nproc)
 
-    model = Model()
+    model_file = options.model if os.path.isfile(options.model) else get_builtin_model(options.model)
+    model = Model(model_file)
+
     mapper = PathMapper.file_mapper(inputdir, outputdir, glob='**/*.mnc', suffix='.obj')
     with ThreadPoolExecutor(max_workers=nproc) as pool:
         results = pool.map(lambda t, p: run_surface_fit(*t, p), mapper, itertools.repeat(model))
@@ -96,6 +101,12 @@ def locate_surface_for(mask: Path) -> Optional[Path]:
     if second is not None:
         return None
     return first
+
+
+def get_builtin_model(name: str) -> str:
+    builtin_model_dir = importlib.resources.files(__package__).joinpath('models')
+    model_file = builtin_model_dir.joinpath(name + '.csv')
+    return str(model_file)
 
 
 if __name__ == '__main__':

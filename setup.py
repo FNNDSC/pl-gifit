@@ -46,6 +46,6 @@ setup(
         ]
     },
     package_data={
-        'innerspfit': ['model.csv']
+        'innerspfit': ['models']
     }
 )
