@@ -1,7 +1,7 @@
 from typing import Iterable
 
-from innerspfit import helpers
-from innerspfit.model import SurfaceFitParams
+from gifit import helpers
+from gifit.model import SurfaceFitParams
 import pytest
 
 PARAMS1 = SurfaceFitParams(

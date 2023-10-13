@@ -13,9 +13,9 @@ from typing import Optional
 from chris_plugin import chris_plugin, PathMapper
 from loguru import logger
 
-from innerspfit import __version__, DISPLAY_TITLE, helpers
-from innerspfit.gi import gyrification_index
-from innerspfit.model import Model
+from gifit import __version__, DISPLAY_TITLE, helpers
+from gifit.gi import gyrification_index
+from gifit.model import Model
 
 parser = ArgumentParser(description='surface_fit wrapper',
                         formatter_class=ArgumentDefaultsHelpFormatter)

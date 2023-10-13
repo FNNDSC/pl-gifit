@@ -2,7 +2,7 @@ import functools
 from pathlib import PurePath
 from typing import Iterable
 
-from innerspfit.model import SurfaceFitParams
+from gifit.model import SurfaceFitParams
 
 
 def to_cliargs(sched: Iterable[SurfaceFitParams]) -> Iterable[str]:

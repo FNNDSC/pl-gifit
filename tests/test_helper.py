@@ -2,7 +2,7 @@ from pathlib import PurePath
 
 import pytest
 
-from innerspfit import helpers
+from gifit import helpers
 
 
 @pytest.mark.parametrize(

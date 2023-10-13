@@ -1,11 +1,18 @@
+import importlib.resources
+
 import pytest
 
-from innerspfit.model import Model
+from gifit.model import Model
 
 
 @pytest.fixture(scope='session')
-def model() -> Model:
-    return Model()
+def model_file() -> str:
+    return str(importlib.resources.files('gifit').joinpath('models').joinpath('a.csv'))
+
+
+@pytest.fixture(scope='session')
+def model(model_file) -> Model:
+    return Model(model_file)
 
 
 @pytest.mark.parametrize(

@@ -26,18 +26,18 @@ if shutil.which('surface_fit_script.pl') is None:
 
 
 setup(
-    name='innerspfit',
-    version=get_version('innerspfit/__init__.py'),
+    name='gifit',
+    version=get_version('gifit/__init__.py'),
     description='Outer to inner surface mesh deformation using a radial distance map for human fetal MRI',
     author='FNNDSC',
     author_email='Jennings.Zhang@childrens.harvard.edu',
     url='https://github.com/FNNDSC/pl-gifit',
-    packages=['innerspfit'],
+    packages=['gifit'],
     install_requires=['chris_plugin', 'pandas', 'loguru'],
     license='MIT',
     entry_points={
         'console_scripts': [
-            'innerspfit = innerspfit.__main__:main'
+            'gifit = gifit.__main__:main'
         ]
     },
     classifiers=[
@@ -53,7 +53,7 @@ setup(
         ]
     },
     package_data={
-        'innerspfit': ['models']
+        'gifit': ['models']
     },
     scripts=scripts
 )
