@@ -1,5 +1,6 @@
 from setuptools import setup
 import re
+import shutil
 
 _version_re = re.compile(r"(?<=^__version__ = (\"|'))(.+)(?=\"|')")
 
@@ -16,6 +17,12 @@ def get_version(rel_path: str) -> str:
         if version is None:
             raise RuntimeError(f'Could not find __version__ in {rel_path}')
         return version.group(0)
+
+
+# add script to $PATH for installing outside of container
+scripts = []
+if shutil.which('surface_fit_script.pl') is None:
+    scripts = ['base/surface_fit_script.pl']
 
 
 setup(
@@ -47,5 +54,6 @@ setup(
     },
     package_data={
         'innerspfit': ['models']
-    }
+    },
+    scripts=scripts
 )
