@@ -45,6 +45,10 @@ class SurfaceFitParams:
         )
 
     @classmethod
+    def empty_with_size(cls, size: str) -> Self:
+        return cls(size, '0', '0', '0', '100', '10', '0', '0', '0', '0', '0')
+
+    @classmethod
     def field_names(cls):
         return frozenset(f.name for f in dataclasses.fields(cls))
 

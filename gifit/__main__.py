@@ -15,7 +15,7 @@ from loguru import logger
 
 from gifit import __version__, DISPLAY_TITLE, helpers
 from gifit.gi import gyrification_index
-from gifit.model import Model
+from gifit.model import Model, SurfaceFitParams
 
 parser = ArgumentParser(description='surface_fit wrapper',
                         formatter_class=ArgumentDefaultsHelpFormatter)
@@ -23,6 +23,8 @@ parser.add_argument('--no-fail', dest='no_fail', action='store_true',
                     help='Produce exit code 0 even if any subprocesses do not.')
 parser.add_argument('-m', '--model', dest='model', type=str, default='a',
                     help='Name of built-in model to use, or a path to a custom CSV model.')
+parser.add_argument('-s', '--size', dest='size', type=int, default=81920,
+                    help='Output mesh size')
 parser.add_argument('-V', '--version', action='version',
                     version=f'%(prog)s {__version__}')
 parser.add_argument('-t', '--threads', type=int, default=0,
@@ -51,13 +53,15 @@ def main(options: Namespace, inputdir: Path, outputdir: Path):
 
     mapper = PathMapper.file_mapper(inputdir, outputdir, glob='**/*.mnc', suffix='.obj')
     with ThreadPoolExecutor(max_workers=nproc) as pool:
-        results = pool.map(lambda t, p: run_surface_fit(*t, p), mapper, itertools.repeat(model))
+        results = pool.map(lambda t, p, s: run_surface_fit(*t, p, s), mapper,
+                           itertools.repeat(model),
+                           itertools.repeat(str(options.size)))
 
     if not options.no_fail and not all(results):
         sys.exit(1)
 
 
-def run_surface_fit(grid: Path, output_surf: Path, model: Model) -> bool:
+def run_surface_fit(grid: Path, output_surf: Path, model: Model, size: str) -> bool:
     """
     :return: True if successful
     """
@@ -70,7 +74,10 @@ def run_surface_fit(grid: Path, output_surf: Path, model: Model) -> bool:
     gi = gyrification_index(starting_surface, gi_file)
     logger.info('{} gyrification_index={}', starting_surface, gi)
 
-    sched = model.get_schedule_for(gi)
+    sched = list(model.get_schedule_for(gi))
+    # If last stage does not match target size, do one more stage with zero iterations just to resize the mesh
+    if sched[-1].size != size:
+        sched.append(SurfaceFitParams.empty_with_size(size))
     cli_args = helpers.to_cliargs(sched)
 
     extra_args = [
