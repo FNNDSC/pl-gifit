@@ -32,7 +32,7 @@ parser.add_argument('-t', '--threads', type=int, default=0,
 
 @chris_plugin(
     parser=parser,
-    title='Inner subplate surface mesh deformation',
+    title='Surface mesh deformation',
     category='Surfaces',
     min_memory_limit='1Gi',
     min_cpu_limit='1000m',

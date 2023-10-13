@@ -21,7 +21,7 @@ def _run_adapt_object_mesh(surface: str | os.PathLike, output: str | os.PathLike
     """
     Run ``adapt_object_mesh``. Doing this before ``gyrification_index`` can work around some bugs.
 
-    See https://github.com/FNNDSC/pl-innerspfit/issues/1
+    See https://github.com/FNNDSC/pl-gifit/issues/1
 
     If ``adapt_object_mesh`` fails, as a fallback ``output`` is created as a symlink to ``surface``.
     """

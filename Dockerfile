@@ -1,15 +1,15 @@
-FROM docker.io/fnndsc/pl-innerspfit:base-1
+FROM docker.io/fnndsc/pl-gifit:base-1
 
 LABEL org.opencontainers.image.authors="FNNDSC <Jennings.Zhang@childrens.harvard.edu>" \
-      org.opencontainers.image.title="Inner Subplate Surface Fit" \
-      org.opencontainers.image.description="Outer to inner surface mesh deformation using a radial distance map for human fetal MRI"
+      org.opencontainers.image.title="pl-gifit" \
+      org.opencontainers.image.description="A ChRIS plugin for surface mesh deformation using different parameters depending on gyrification index"
 
 RUN \
     --mount=type=cache,sharing=private,target=/home/mambauser/.mamba/pkgs,uid=57439,gid=57439 \
     --mount=type=cache,sharing=private,target=/opt/conda/pkgs,uid=57439,gid=57439 \
     micromamba install -y -n base -c conda-forge python=3.11.5 pandas=2.1.1
 
-ARG SRCDIR=/home/mambauser/pl-innerspfit
+ARG SRCDIR=/home/mambauser/pl-gifit
 ARG MAMBA_DOCKERFILE_ACTIVATE=1
 WORKDIR ${SRCDIR}
 

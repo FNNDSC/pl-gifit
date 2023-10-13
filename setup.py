@@ -31,7 +31,7 @@ setup(
     description='Outer to inner surface mesh deformation using a radial distance map for human fetal MRI',
     author='FNNDSC',
     author_email='Jennings.Zhang@childrens.harvard.edu',
-    url='https://github.com/FNNDSC/pl-innerspfit',
+    url='https://github.com/FNNDSC/pl-gifit',
     packages=['innerspfit'],
     install_requires=['chris_plugin', 'pandas', 'loguru'],
     license='MIT',
