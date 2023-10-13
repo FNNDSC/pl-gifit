@@ -53,7 +53,7 @@ setup(
         ]
     },
     package_data={
-        'gifit': ['models']
+        'gifit': ['models/*']
     },
     scripts=scripts
 )
