@@ -11,6 +11,7 @@ RUN microminc.sh -p '&run' \
     depth_potential \
     surface_fit_script.pl \
     surface_fit \
+    print_n_polygons \
     volume_object_evaluate \
     vertstats_math \
         /microminc
