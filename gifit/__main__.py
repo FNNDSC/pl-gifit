@@ -27,7 +27,7 @@ parser.add_argument('-s', '--size', dest='size', type=int, default=81920,
                     help='Output mesh size')
 parser.add_argument('-V', '--version', action='version',
                     version=f'%(prog)s {__version__}')
-parser.add_argument('-t', '--threads', type=int, default=0,
+parser.add_argument('-J', '--threads', type=int, default=0,
                     help='Number of threads to use for parallel jobs. '
                          'Pass 0 to use number of visible CPUs.')
 
