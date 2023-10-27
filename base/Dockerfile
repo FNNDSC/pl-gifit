@@ -11,6 +11,8 @@ RUN microminc.sh -p '&run' \
     depth_potential \
     surface_fit_script.pl \
     surface_fit \
+    volume_object_evaluate \
+    vertstats_math \
         /microminc
 
 # MNI data needs to be copied manually
