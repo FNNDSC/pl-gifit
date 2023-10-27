@@ -221,8 +221,10 @@ unlink( $stretch_model );
 if (defined $disterr_file) {
   my $last_iso = $a_iso[-1];
   my $disterr_off = "$tmpdir/disterr_off.txt";
+  my $disterr_precise = "$tmpdir/disterr_precise.txt";
   system("volume_object_evaluate -linear $chamfer $surface $disterr_off");
-  system("vertstats_math -old_style_file $disterr_off -sub -const $last_iso $disterr_file");
+  system("vertstats_math -old_style_file $disterr_off -sub -const $last_iso $disterr_precise");
+  system("depth_potential -smooth 2 $disterr_precise $surface $disterr_file");
   if (defined $disterr_abs_file) {
     system("vertstats_math -old_style_file $disterr_file -abs $disterr_abs_file");
   }

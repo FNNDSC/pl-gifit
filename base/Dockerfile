@@ -8,6 +8,7 @@ RUN microminc.sh -p '&run' \
     xfminvert \
     transform_objects \
     measure_surface_area \
+    depth_potential \
     surface_fit_script.pl \
     surface_fit \
         /microminc
