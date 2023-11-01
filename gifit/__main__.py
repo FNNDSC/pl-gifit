@@ -25,7 +25,7 @@ parser.add_argument('-m', '--model', dest='model', type=str, default='d',
                     help='Name of built-in model to use, or a path to a custom CSV model.')
 parser.add_argument('-s', '--size', dest='size', type=int, default=81920,
                     help='Output mesh size')
-parser.add_argument('-t', '--thickness-fwhm', dest='thickness_fwhm', type=str, default='0,10',
+parser.add_argument('-t', '--thickness-fwhm', dest='thickness_fwhm', type=str, default='0,5,10',
                     help='List of fwhm values in mm to use for calculating thickness between surfaces')
 parser.add_argument('-V', '--version', action='version',
                     version=f'%(prog)s {__version__}')
