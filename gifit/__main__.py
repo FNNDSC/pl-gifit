@@ -75,7 +75,7 @@ def run_surface_fit(grid: Path, output_surf: Path, model: Model, size: str, thic
         logger.error('No starting surface found for {}', grid)
         return False
 
-    gi_file = output_surf.with_suffix('.gi.txt')
+    gi_file = output_surf.with_suffix('.gi')
     gi = gyrification_index(starting_surface, gi_file)
     logger.info('{} gyrification_index={}', starting_surface, gi)
 
