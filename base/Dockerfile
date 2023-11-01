@@ -14,6 +14,8 @@ RUN microminc.sh -p '&run' \
     print_n_polygons \
     volume_object_evaluate \
     vertstats_math \
+    cortical_thickness \
+    average_surfaces \
         /microminc
 
 # MNI data needs to be copied manually

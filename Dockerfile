@@ -1,4 +1,4 @@
-FROM docker.io/fnndsc/pl-gifit:base-1
+FROM docker.io/fnndsc/pl-gifit:base-2
 
 LABEL org.opencontainers.image.authors="FNNDSC <Jennings.Zhang@childrens.harvard.edu>" \
       org.opencontainers.image.title="pl-gifit" \
