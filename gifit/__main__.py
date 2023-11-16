@@ -21,7 +21,7 @@ parser = ArgumentParser(description='surface_fit wrapper',
                         formatter_class=ArgumentDefaultsHelpFormatter)
 parser.add_argument('--no-fail', dest='no_fail', action='store_true',
                     help='Produce exit code 0 even if any subprocesses do not.')
-parser.add_argument('-m', '--model', dest='model', type=str, default='d',
+parser.add_argument('-m', '--model', dest='model', type=str, default='e',
                     help='Name of built-in model to use, or a path to a custom CSV model.')
 parser.add_argument('-s', '--size', dest='size', type=int, default=81920,
                     help='Output mesh size')
