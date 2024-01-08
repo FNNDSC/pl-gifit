@@ -29,7 +29,7 @@ run from either within _ChRIS_ or the command-line.
 
 The easiest way to run `pl-gifit` is using this pipeline which accepts
 subplate segmentations as inputs and extracts both inner and outer subplate surfaces.
-Pipeline is WIP and currently not available.
+https://github.com/FNNDSC/Fetal_Brain_MRI_Surface_Extraction_Pipeline/blob/main/Snakefile
 
 To run `pl-gifit` manually, you must prepare its input directory according to its expected convention.
 The input directory should contain subdirectories where each subdirectory contains a brain.
