@@ -5,7 +5,7 @@ from collections import defaultdict
 from typing import NewType, Self, Iterator
 
 _MODEL_PARAM_TYPES: defaultdict[str, type] = defaultdict(lambda: str)
-_MODEL_PARAM_TYPES['approximate_age'] = int
+_MODEL_PARAM_TYPES['approximate_age'] = float
 _MODEL_PARAM_TYPES['stage'] = int
 _MODEL_PARAM_TYPES['gyrification_index'] = float
 

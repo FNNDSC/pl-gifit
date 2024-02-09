@@ -1,0 +1,6 @@
+f.csv is the same as e.csv, but with smaller stretch weight.
+
+g.csv implements the idea of fitting to one voxel deeper for old brains,
+before re-expanding outwards back to the boundary. This can improve fitting
+into tight sulci.
+
